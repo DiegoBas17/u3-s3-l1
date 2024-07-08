@@ -1,20 +1,22 @@
-import { useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import { Heart, HeartFill } from "react-bootstrap-icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Job = ({ data }) => {
-  const [isFavorite, setIsFavorite] = useState(false);
-
   const dispatch = useDispatch();
+  const favoriteCompanies = useSelector(
+    (state) => state.favoriteCompanies.content
+  );
+  const isFavorite = favoriteCompanies.some(
+    (company) => company._id === data._id
+  );
 
   const handleClick = () => {
-    setIsFavorite(!isFavorite);
     if (isFavorite) {
       dispatch({
         type: "REMOVE_FAVORITE",
-        payload: data,
+        payload: data._id,
       });
     } else {
       dispatch({
@@ -23,6 +25,7 @@ const Job = ({ data }) => {
       });
     }
   };
+
   return (
     <Row
       className="mx-0 mt-3 p-3"

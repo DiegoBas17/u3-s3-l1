@@ -20,11 +20,10 @@ const mainReducer = (state = initialState, action) => {
         favoriteCompanies: {
           ...state.favoriteCompanies,
           content: state.favoriteCompanies.content.filter(
-            (company) => company !== action.payload
+            (company) => company._id !== action.payload
           ),
         },
       };
-
     default:
       return state;
   }

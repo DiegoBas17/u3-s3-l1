@@ -2,18 +2,19 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const FavoriteCompany = () => {
-  const favorite = useSelector((state) => state.favoriteCompanies.content);
-  console.log(favorite);
+  const favoriteCompanies = useSelector(
+    (state) => state.favoriteCompanies.content
+  );
+
   return (
     <>
-      {favorite.map((company, index) => {
-        return (
-          <div key={index}>
-            <Link to={`/${company.company_name}`}>{company.company_name}</Link>
-          </div>
-        );
-      })}
+      {favoriteCompanies.map((company) => (
+        <div key={company._id}>
+          <Link to={`/${company.company_name}`}>{company.company_name}</Link>
+        </div>
+      ))}
     </>
   );
 };
+
 export default FavoriteCompany;
