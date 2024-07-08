@@ -11,10 +11,17 @@ const Job = ({ data }) => {
 
   const handleClick = () => {
     setIsFavorite(!isFavorite);
-    dispatch({
-      type: "ADD_FAVORITE",
-      payload: data,
-    });
+    if (isFavorite) {
+      dispatch({
+        type: "REMOVE_FAVORITE",
+        payload: data,
+      });
+    } else {
+      dispatch({
+        type: "ADD_FAVORITE",
+        payload: data,
+      });
+    }
   };
   return (
     <Row
