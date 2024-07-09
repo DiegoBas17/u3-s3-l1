@@ -2,6 +2,7 @@ import { Row, Col } from "react-bootstrap";
 import { Heart, HeartFill } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { ADD_FAVORITE, REMOVE_FAVORITE } from "../action";
 
 const Job = ({ data }) => {
   const dispatch = useDispatch();
@@ -15,12 +16,12 @@ const Job = ({ data }) => {
   const handleClick = () => {
     if (isFavorite) {
       dispatch({
-        type: "REMOVE_FAVORITE",
+        type: REMOVE_FAVORITE,
         payload: data._id,
       });
     } else {
       dispatch({
-        type: "ADD_FAVORITE",
+        type: ADD_FAVORITE,
         payload: data,
       });
     }
