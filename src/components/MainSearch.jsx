@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Container, Row, Col, Form } from "react-bootstrap";
+import { Container, Row, Col, Form, Spinner, Alert } from "react-bootstrap";
 import Job from "./Job";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,13 +7,13 @@ import { fetchReduceAction } from "../action";
 
 const MainSearch = () => {
   const [query, setQuery] = useState("");
-  /* const [jobs, setJobs] = useState([]); */
   const dispatch = useDispatch();
   const jobs = useSelector((state) => state.fetchJobs.content);
   const handleChange = (e) => {
     setQuery(e.target.value);
   };
-  console.log(jobs);
+  const loading = useSelector((state) => state.fetchJobs.loading);
+  const error = useSelector((state) => state.fetchJobs.error);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,7 +22,11 @@ const MainSearch = () => {
 
   return (
     <>
-      {jobs && (
+      {error ? (
+        <Alert variant="warning">errore nel reperimento dei dati</Alert>
+      ) : loading ? (
+        <Spinner animation="border" className="mt-3" variant="primary" />
+      ) : (
         <Container>
           <Row>
             <Col xs={10} className="mx-auto my-3">

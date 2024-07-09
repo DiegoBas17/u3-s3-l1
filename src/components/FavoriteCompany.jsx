@@ -1,31 +1,22 @@
 import { Container } from "react-bootstrap";
-import { Heart, HeartFill } from "react-bootstrap-icons";
+import { Trash } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { ADD_FAVORITE, REMOVE_FAVORITE } from "../action";
+import { REMOVE_FAVORITE } from "../action";
 
 const FavoriteCompany = () => {
-  const data = useSelector((state) => state.search.content);
   const dispatch = useDispatch();
   const favoriteCompanies = useSelector(
     (state) => state.favoriteCompanies.content
   );
-  const isFavorite = favoriteCompanies.some(
-    (company) => company._id === data._id
-  );
-  const handleClick = () => {
-    if (isFavorite) {
-      dispatch({
-        type: REMOVE_FAVORITE,
-        payload: data._id,
-      });
-    } else {
-      dispatch({
-        type: ADD_FAVORITE,
-        payload: data,
-      });
-    }
+
+  const handleClick = (companyId) => {
+    dispatch({
+      type: REMOVE_FAVORITE,
+      payload: companyId,
+    });
   };
+
   return (
     <Container className="mt-5">
       {favoriteCompanies.map((company) => (
@@ -39,17 +30,19 @@ const FavoriteCompany = () => {
           >
             {company.company_name}
           </Link>
-          {isFavorite ? (
-            <HeartFill
-              fill="red"
-              onClick={handleClick}
-              style={{ cursor: "pointer" }}
-            />
-          ) : (
-            <Heart onClick={handleClick} style={{ cursor: "pointer" }} />
-          )}
+          <button
+            onClick={() => handleClick(company._id)}
+            style={{
+              background: "none",
+              border: "none",
+              padding: 0,
+              cursor: "pointer",
+            }}
+          >
+            <Trash style={{ cursor: "pointer" }} />
+          </button>
         </div>
-      ))}{" "}
+      ))}
     </Container>
   );
 };
